@@ -23,17 +23,17 @@ jobs:
       - run: npm -v
 workflows:
   version: 2
-  build_test_hold_doc:
+  build-test-hold-doc:
     jobs:
       - build
-      - test
+      - test:
+          requires:
+          - build
+      - hold:
+         type: approval
          requires:
-         - build
-      - hold
-        type: approval
-        requires:
-          - test
-      - doc
-        requires:
-        - hold
+           - test
+      - doc:
+          requires:
+            - hold
         
