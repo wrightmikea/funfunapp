@@ -13,11 +13,18 @@ jobs:
       - image: circleci/node:7
     steps:
       - checkout
-    steps:
       - run: npm test
+  doc:
+    working_directory: ~/tmp
+    docker:
+      - image: circleci/node:7
+    steps:
+      - checkout
+      - run: npm -v
 workflows:
   version: 2
   build_and_test:
     jobs:
       - build
       - test
+      - doc
