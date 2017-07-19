@@ -6,13 +6,21 @@ jobs:
       - image: circleci/node:7
     steps:
       - checkout
+      - restore_cache:
+            key: dependency-cache-{{ checksum "package.json" }}
       - run: npm install
+      - save_cache:
+            key: dependency-cache-{{ checksum "package.json" }}
+            paths:
+              - ./node_modules
   test:
     working_directory: ~/tmp
     docker:
       - image: circleci/node:7
     steps:
       - checkout
+      - restore_cache:
+            key: dependency-cache-{{ checksum "package.json" }}
       - run: npm test
   doc:
     working_directory: ~/tmp
